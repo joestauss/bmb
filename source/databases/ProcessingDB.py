@@ -69,6 +69,25 @@ class ProcessingDB( SQLiteDB):
             return_dict[ old_rating].add( film_id)
         return return_dict
 
-    def status_pie_chart( self, film_ids):
-        QUERY = """
-        """
+    @property
+    def films_for_analysis( self):
+        valid = (
+            self.Status( 'basic info'),
+            self.Status( 'warehouse' ) )
+        QUERY = f"SELECT id FROM Film WHERE status IN ({','.join( '?'*len(valid))})"
+        return self.get( QUERY, *valid)
+
+    def genre_combinations( self, film_ids):
+        QUERY = "SELECT g.text FROM FilmGenre fg JOIN Genre g ON fg.genre=g.id WHERE fg.film=?"
+        return *( tuple( self.get( QUERY, film_id)) for film_id in film_ids ),
+
+    def genre_order( self, mode='text'):
+        TEXT_QUERY = "SELECT text FROM GenreOrdering ORDER BY idx ASC"
+        ID_QUERY   = "SELECT id   FROM GenreOrdering ORDER BY idx ASC"
+        if mode == 'text':
+            query = TEXT_QUERY
+        elif mode == 'id':
+            query = ID_QUERY
+        else:
+            raise Unknown_Genre_Order_Mode( mode)
+        return self.get( query)
