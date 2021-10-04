@@ -39,4 +39,8 @@ def get_tmdb_movie( *args, **kw):
             search_year = get_release_year( result)
             if search_year and 'release_date' in dir( result) and len( result.release_date) > 0 and year == search_year:
                 return result
-        raise UnsuccessfulTMDbSearch
+        raise UnsuccessfulTMDbSearch( str( args))
+
+def get_tmdb_recommendations( *args, **kw):
+    film_id = get_tmdb_movie( *args, **kw).id
+    return *( (r.title, get_release_year( r)) for r in Movie().recommendations( movie_id=film_id) ),

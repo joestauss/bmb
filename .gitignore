@@ -3,3 +3,5 @@ source/resources/
 __pycache__
 .ipynb_checkpoints
 source/webscraping/streaming_service_content.py
+notebooks/Old Ratings.ipynb
+notebooks/B-Movies.ipynb

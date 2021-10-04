@@ -1,5 +1,37 @@
 from collections import defaultdict
 
+def cross_classification_pairs( categories, reflexive=False):
+    pairs = list()
+    if len( categories) == 1:
+        category = categories[0]
+        pairs.append(( category, category))
+    else:
+        for c, category in enumerate( categories):
+            for i in range( c):
+                pairs.append(( categories[i], category ))
+                if reflexive:
+                    pairs.append(( category, categories[i] ))
+    return pairs
+
+def category_coincidence( category_combinations, reflexive=False):
+    """
+    Returns a dict-of-dicts that contains the count of each pair.
+    Single-value categories are counted along the diagonal.
+    """
+
+    cc = list()
+    for category_combination in category_combinations:
+        if len( category_combination) == 1:
+            category = category_combination[0]
+            cc.append(( category, category))
+        else:
+            for c, category in enumerate( category_combination):
+                for i in range( c):
+                    cc.append(( category_combination[i], category ))
+                    if reflexive:
+                        cc.append(( category, category_combination[i] ))
+    return cc
+
 def category_coincidence_count( category_combinations):
     """
     Returns a dict-of-dicts that contains the count of each pair.

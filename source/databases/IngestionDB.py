@@ -5,8 +5,9 @@ class IngestionDB( SQLiteDB):
     DEFAULT_DB = RESOURCE_DIRECTORY / "Web Ingestion.db"
 
     id_tables = {
-        "Streamer"      : ( "name", ),
-        "JustwatchFilm" : ( "url" , ) }
+        "Streamer"      : ( "name",        ),
+        "JustwatchFilm" : ( "url" ,        ),
+        "TMDbFilm"      : ( 'title', 'year') }
 
     def JustwatchFilm( self, url):
         FILM_TABLE = "JustwatchFilm"
