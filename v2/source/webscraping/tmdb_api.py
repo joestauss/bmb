@@ -1,12 +1,11 @@
 from tmdbv3api      import TMDb, Movie, Genre, Person
 from bmb.gitignored import TMDB_API_KEY
+from bmb.v2.source.util.exceptions import *
 
 tmdb = TMDb()
 tmdb.api_key = TMDB_API_KEY
 tmdb.language = 'en'
 tmdb.debug = True
-
-class UnsuccessfulTMDbSearch( Exception): pass
 
 def get_release_year( tmdb_result):
     if "release_date" not in dir( tmdb_result) or not tmdb_result.release_date:

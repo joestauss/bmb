@@ -9,3 +9,4 @@ notebooks/Tagline of Terror.ipynb
 v2/source/webscraping/streaming_content.py
 v2/source/webscraping/webscraping_utils.py
 v2/source/util/dataclasses.py
+v2/source/resource/Movies.db
