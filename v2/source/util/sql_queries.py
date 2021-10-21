@@ -42,3 +42,5 @@ class Query( Enum_StrIsValue):
         AND year - ? BETWEEN -2 AND 2; """
 
     UNKNOWN_ALIASES = "SELECT title, year FROM Alias WHERE type IS NULL"
+
+    UPDATE_TIME_OF_FILM_TAG = "UPDATE FilmTag SET added=? WHERE film=? AND tag=?"

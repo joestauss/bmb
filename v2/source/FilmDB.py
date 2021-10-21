@@ -19,7 +19,7 @@ class FilmDB( SQLiteDB):
     ############################################################################
     # Data Access API                                                          #
     #   Alias and Film                                                         #
-    #   Genre and Tag                                                          #
+    #   Genre and Tag (and tag)                                                #
     ############################################################################
     def Film( self, title, year, lookup=False):
         alias_id = self.Alias( title, year)
@@ -70,8 +70,8 @@ class FilmDB( SQLiteDB):
     def _similar_alias_search(self, title, year):
         similar_aliases = self.get( Query.SIMILAR_ALIAS, title, year)
         for (id, film) in similar_aliases:
-            if film != similar_aliases[0][0]:
-                raise MultipleSimilarFilms( f"title={title}, year={year}")
+            if film != similar_aliases[0][1]:
+                raise MultipleSimilarFilms( f"title={title}, year={year} is similar to {[a[0] for a in similar_aliases]}")
         return film if similar_aliases else None
 
     def Genre( self, genre_text):
@@ -84,9 +84,15 @@ class FilmDB( SQLiteDB):
     def Tag( self, tag_text):
         tag_id = self.select_one( 'id', 'Tag', text=tag_text)
         if not tag_id:
-            self.insert( "Tag", text=tag_text )
+            self.insert( "Tag", text=tag_text, added=self.now )
             tag_id = self.select_one( 'id', 'Tag', text=tag_text)
         return tag_id
+
+    def tag( self, film_id, tag_id):
+        if self.select_one( '*', 'FilmTag', film=film_id, tag=tag_id):
+            self.set( Query.UPDATE_TIME_OF_FILM_TAG, self.now, film_id, tag_id)
+        else:
+            self.insert( 'FilmTag', film=film_id, tag=tag_id, added=self.now)
 
     #   Data Lookup
     #       - unknown_aliases

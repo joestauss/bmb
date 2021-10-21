@@ -9,7 +9,7 @@ tmdb.debug = True
 
 def get_release_year( tmdb_result):
     if "release_date" not in dir( tmdb_result) or not tmdb_result.release_date:
-        raise ValueError( f"This fild has no date.")
+        raise ValueError( f"This object has no date: {tmdb_result}")
     try:
         return int(tmdb_result.release_date.split('-')[0])
     except:
@@ -35,9 +35,10 @@ def get_tmdb_movie( *args, **kw):
         return search[0]
     else:
         for result in search:
-            search_year = get_release_year( result)
-            if search_year and 'release_date' in dir( result) and len( result.release_date) > 0 and year == search_year:
-                return result
+            if result.release_date:
+                search_year = get_release_year( result)
+                if search_year and 'release_date' in dir( result) and len( result.release_date) > 0 and year == search_year:
+                    return result
         raise UnsuccessfulTMDbSearch( str( args))
 
 def get_tmdb_recommendations( *args, **kw):
