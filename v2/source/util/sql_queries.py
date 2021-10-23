@@ -36,11 +36,36 @@ class Query( Enum_StrIsValue):
         )
     """
 
+    SELECT_CURRENTLY_STREAMABLE_AT_STREAMER = """
+        SELECT url FROM JustWatchState
+        WHERE streamer=? AND REMOVED IS NULL
+    """
+
+    SELECT_STREAMER_ID = """
+        SELECT id
+        FROM Streamer
+        WHERE LOWER(name)=LOWER(?)
+    """
+
     SIMILAR_ALIAS = """
         SELECT id, film FROM Alias
         WHERE LOWER( title) = LOWER( ?)
         AND year - ? BETWEEN -2 AND 2; """
 
     UNKNOWN_ALIASES = "SELECT title, year FROM Alias WHERE type IS NULL"
+
+    UPDATE_CONFIRM_TIME_FOR_JWURL_AT_STREAMER = """
+        UPDATE JustWatchState
+        SET    confirmed=?
+        WHERE  url=?
+        AND    streamer=?
+    """
+
+    UPDATE_REMOVE_TIME_FOR_JWURL_AT_STREAMER = """
+        UPDATE JustWatchState
+        SET    removed=?
+        WHERE  url=?
+        AND    streamer=?
+    """
 
     UPDATE_TIME_OF_FILM_TAG = "UPDATE FilmTag SET added=? WHERE film=? AND tag=?"

@@ -27,17 +27,17 @@ def _parse_film_args( *args, **kw):
     return title, year
 
 def get_tmdb_movie( *args, **kw):
-    title, year = _parse_film_args( *args, **kw)
-    movie       = Movie()
-    search      = movie.search( title)
+    title, search_year = _parse_film_args( *args, **kw)
+    movie              = Movie()
+    search             = movie.search( title)
 
-    if not year:
+    if not search_year:
         return search[0]
     else:
         for result in search:
-            if result.release_date:
-                search_year = get_release_year( result)
-                if search_year and 'release_date' in dir( result) and len( result.release_date) > 0 and year == search_year:
+            if 'release_date' in dir( result) and result.release_date and len( result.release_date) > 0:
+                found_year = get_release_year( result)
+                if found_year == search_year:
                     return result
         raise UnsuccessfulTMDbSearch( str( args))
 
