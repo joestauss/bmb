@@ -30,10 +30,7 @@ def _reset():
         db.set( f"DELETE FROM {table}")
         db.set( "DELETE FROM sqlite_sequence WHERE name=?", table)
 
-    for film in seed_films:
-        db.Film( film.title, film.year, lookup=True)
-
-    for title, year in tqdm(ProcessingDB().select( 'title', 'year', 'OldRating', rating=4)):
+    for title, year in tqdm(ProcessingDB().select( 'title', 'year', 'OldRating', rating=4)[:3]):
         db.tag(
             db.Film( title, year, lookup=True),
             db.Tag( "watched") )

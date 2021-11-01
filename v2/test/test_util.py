@@ -14,7 +14,7 @@ def _temp_copy( file, unique=UNIQUE_TEMP_FILES):
         temp_file = file
         i = 1
         while temp_file.exists():
-            tempend = f".temp{hex(i)[2:]}"
+            tempend = f".temp{i}"
             temp_file = Path( f"{file}{tempend}")
             i += 1
     shutil.copyfile( file, temp_file)

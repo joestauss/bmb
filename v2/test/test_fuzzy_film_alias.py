@@ -3,22 +3,22 @@ from collections import namedtuple
 
 ENABLE_WEB_TESTS = True
 
-def test_correctly_called_film( TestDB):
+def test_canonical_alias( TestDB):
     assert TestDB.Film( "The Terminator", 1984) == TestDB.select_one( "film", "Alias", title="The Terminator", year=1984)
     TestDB.destroy()
 
-def test_known_alias_wrong_title( TestDB):
+def test_alternate_canonical_alias_equality( TestDB):
     assert TestDB.Film( "The Terminator", 1984) == TestDB.Film( "Terminator", 1984)
     TestDB.destroy()
 
-def test_wrong_capitalization_not_an_alias( TestDB):
+def test_wrong_capitalization_of_existing_alias( TestDB):
     initial_alias_count = TestDB.select_one( "COUNT(*)", "Alias")
     assert TestDB.Film( "tHe terminatoR", 1984) == TestDB.Film( "Terminator", 1984)
     assert TestDB.AliasType.ALTERNATE.value == TestDB.select_one( "type", "Alias", title="tHe terminatoR", year=1984)
     assert initial_alias_count < TestDB.select_one( "COUNT(*)", "Alias")
     TestDB.destroy()
 
-def test_wrong_year_not_an_alias( TestDB):
+def test_slightly_incorrect_year_of_existing_alias( TestDB):
     initial_alias_count = TestDB.select_one( "COUNT(*)", "Alias")
     assert TestDB.Film( "The Terminator", 1984) == TestDB.Film( "The Terminator", 1983)
     assert TestDB.AliasType.ALTERNATE.value == TestDB.select_one( "type", "Alias", title="The Terminator", year=1983)
