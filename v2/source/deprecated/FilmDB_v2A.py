@@ -176,7 +176,6 @@ class FilmDB( SQLiteDB):
     #   film set slicing
 
     def filmset( self, year=None, genre=None, tag=None):
-
         if not year:
             return_set = set(self.select( "DISTINCT film", "Alias"))
         elif isinstance( year, tuple) and len( year)== 2:
