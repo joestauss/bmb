@@ -12,6 +12,15 @@ class Query( Enum_StrIsValue):
         SET type=?
         WHERE id=?"""
 
+    PREPARE_TAGS_FOR_EXPORT = """
+        SELECT a.title, a.year, t.text, t.added
+        FROM FilmTag ft
+            JOIN Alias a on ft.film = a.film
+            JOIN Tag   t on ft.tag  = t.id
+        WHERE
+            a.type = 1
+    """
+
     SELECT_FILMS_WITHOUT_INFOSET = """
         SELECT DISTINCT a.film
             FROM Alias a

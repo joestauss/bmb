@@ -10,4 +10,6 @@ v2/source/webscraping/imdb_list.py
 v2/source/webscraping/streaming_content.py
 v2/source/util/dataclasses.py
 v2/source/resource/Movies.db
+v2/source/resource/Saved Tags.db
 v2/test/test_IMDb List Ingestion.py
+_backup*

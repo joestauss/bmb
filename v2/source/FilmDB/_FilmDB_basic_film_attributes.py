@@ -68,11 +68,12 @@ class _FilmDB_basic_film_attributes:
             tag_id = self.select_one( 'id', 'Tag', text=tag_text)
         return tag_id
 
-    def tag( self, film_id, tag_id):
+    def tag( self, film_id, tag_id, added=None):
+        add_time = added if added else self.now
         if self.select_one( '*', 'FilmTag', film=film_id, tag=tag_id):
-            self.set( Query.UPDATE_TIME_OF_FILM_TAG, self.now, film_id, tag_id)
+            self.set( Query.UPDATE_TIME_OF_FILM_TAG, add_time, film_id, tag_id)
         else:
-            self.insert( 'FilmTag', film=film_id, tag=tag_id, added=self.now)
+            self.insert( 'FilmTag', film=film_id, tag=tag_id, added=add_time)
 
     @property
     def unknown_aliases( self):
