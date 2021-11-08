@@ -1,5 +1,2 @@
-from bmb.source.databases import *
-
-import pathlib
-PATH_TO_V2_TEST_DB = pathlib.Path( __file__).parent / 'v2' / 'test' / 'Test.db'
-BMBv2_RESOURCE_DIR = pathlib.Path( __file__).parent / 'v2' / 'source' / 'resource'
+from bmb.gitignored     import TMDB_API_KEY, PATH_TO_TEST_DB, RESOURCE_DIR
+from bmb.source.FilmDB  import FilmDB

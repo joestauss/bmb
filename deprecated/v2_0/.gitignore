@@ -1,0 +1,7 @@
+.ipynb_checkpoints
+__pycache__
+
+source/webscraping/streaming_content.py
+
+gitignored*
+_backup*

@@ -1,5 +1,4 @@
-class Foreign_Lanaguge_Hold(       Exception ) : pass
-class Justwatch_Webscraping_Error( Exception ) : pass
-class Unknown_Genre_Order_Mode(    Exception ) : pass
-class Unknown_ID_Table(            Exception ) : pass
-class Unknown_Streaming_Service(   Exception ) : pass
+class MultipleSimilarFilms(   Exception): pass
+class UnidentifiedAlias(      Exception): pass
+class UnknownInfoset(         Exception): pass
+class UnsuccessfulTMDbSearch( Exception): pass
