@@ -9,6 +9,7 @@ tmdb.debug = True
 
 def get_release_year( tmdb_result):
     if "release_date" not in dir( tmdb_result) or not tmdb_result.release_date:
+        return None
         raise ValueError( f"This object has no date: {tmdb_result}")
     try:
         return int(tmdb_result.release_date.split('-')[0])
@@ -21,7 +22,10 @@ def _parse_film_args( *args, **kw):
         if 'year' in kw:
             year = kw[ 'year']
     elif len( args) == 2:
-        title, year = args[0], int( args[1])
+        try:
+            title, year = args[0], int( args[1])
+        except:
+            title, year = args[0], None
     else:
         raise ValueError
     return title, year

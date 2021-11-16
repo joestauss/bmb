@@ -1,8 +1,7 @@
-from bmb.source.standard_import import *
+from bmb.deprecated.v1.source.standard_import import *
 
 class WarehouseDB( SQLiteDB):
-    DEFAULT_DB = RESOURCE_DIRECTORY / "Warehouse.db"
-
+    DEFAULT_DB = V1_RESOURCE_DIRECTORY / "Warehouse.db"
 
     id_tables = {
         "Film"     : ( "title" ,  "year" ),

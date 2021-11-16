@@ -1,7 +1,7 @@
 from bmb.source.FilmDB._standard_import           import *
 
 class _FilmDB_filmset_slicing:
-    def filmset( self, year=None, genre=None, tag=None):
+    def filmset( self, year=None, genre=None, tag=None, streamable=None):
         if not year:
             return_set = set(self.select( "DISTINCT film", "Alias"))
         elif isinstance( year, tuple) and len( year)== 2:
@@ -55,7 +55,7 @@ class _FilmDB_filmset_slicing:
                             passed_tag |= self.filmset( year=year, genre=genre, tag={sub})
                 else:
                     passed_tag = return_set
-                    for f in tag:
+                    for t in tag:
                         passed_tag &= self.filmset( year=year, genre=genre, tag={t})
             elif isinstance( tag, list):
                 passed_tag = set()
@@ -65,4 +65,12 @@ class _FilmDB_filmset_slicing:
                 raise ValueError( f"Illegal 'tag' value: {tag}")
             return_set &= passed_tag
 
+        if streamable is not None:
+            if streamable:
+                return_set &= set( self.get( Query.GET_STREAMABLE_FILMS))
+            else:
+                return_set &= set( self.get( Query.GET_NONSTREAMABLE_FILM))
+
+
+        return_set = {item for item in return_set if item is not None}
         return return_set

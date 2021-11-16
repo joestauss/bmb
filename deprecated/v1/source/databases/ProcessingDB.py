@@ -1,9 +1,9 @@
-from bmb.source.webscraping.tmdb_access import *
-from bmb.source.standard_import         import *
+from bmb.deprecated.v1.source.webscraping.tmdb_access import *
+from bmb.deprecated.v1.source.standard_import         import *
 
 
 class ProcessingDB( SQLiteDB):
-    DEFAULT_DB = RESOURCE_DIRECTORY / "Processing.db"
+    DEFAULT_DB = V1_RESOURCE_DIRECTORY / "Processing.db"
 
     id_tables = {
         "Film"     : ( "title" ,  "year" ),

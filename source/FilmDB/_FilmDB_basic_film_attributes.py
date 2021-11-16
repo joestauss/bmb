@@ -7,6 +7,8 @@ class _FilmDB_basic_film_attributes:
         if not film_id:
             if lookup:
                 try:
+                    if alias_id is None:
+                        raise Exception( f"Something is wrong with {title} ({year})")
                     self._identify_alias( alias_id)
                     film_id = self.select_one( "film", "Alias", id=alias_id)
                 except UnsuccessfulTMDbSearch:
@@ -75,14 +77,16 @@ class _FilmDB_basic_film_attributes:
         else:
             self.insert( 'FilmTag', film=film_id, tag=tag_id, added=add_time)
 
-    def film_summary( self, film_id):
+    def untag( self, film_id, tag_id):
+        self.set( Query.UNTAG_FILM, film_id, tag_id)
 
+    def film_summary( self, film_id):
         title, year = self.select_one( 'title', 'year', 'Alias', film=film_id, type=self.AliasType.CANONICAL)
         genres = self.get( Query.FILM_ID_TO_GENRES, film_id)
         tags   = self.get( Query.FILM_ID_TO_TAGS  , film_id)
         desc   = self.select_one( 'description', 'FilmDescription', film=film_id)
 
-        lines = [ f" {title} ({year}) " ]
+        lines = [ f"FILM #{film_id}: {title} ({year}) " ]
         lines.append( "-"*len( lines[0]))
         if genres:
             lines.append( "   " + " / ".join( genres))

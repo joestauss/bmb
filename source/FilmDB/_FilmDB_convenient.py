@@ -17,6 +17,10 @@ class _FilmDB_convenient:
     def unknown_films( self):
         return self.get( Query.SELECT_FILMS_WITHOUT_INFOSET, self.Infoset.BASIC_INFO)
 
+    @property
+    def untagged_films( self):
+        return self.get( Query.UNTAGGED_FILMS)
+
     ############################################################################
     # Enums                                                                    #
     #   These Enums contain database constants.                                #

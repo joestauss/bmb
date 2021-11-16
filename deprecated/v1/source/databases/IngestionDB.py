@@ -1,8 +1,8 @@
-from bmb.source.standard_import import *
-from bmb.source.webscraping     import films_available_to_stream
+from bmb.deprecated.v1.source.standard_import import *
+from bmb.deprecated.v1.source.webscraping     import films_available_to_stream
 
 class IngestionDB( SQLiteDB):
-    DEFAULT_DB = RESOURCE_DIRECTORY / "Web Ingestion.db"
+    DEFAULT_DB = V1_RESOURCE_DIRECTORY / "Web Ingestion.db"
 
     id_tables = {
         "Streamer"      : ( "name",        ),

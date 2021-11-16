@@ -1,8 +1,8 @@
 from bmb.source.FilmDB._standard_import          import *
 
 class _FilmDB_web_data_ingestion:
-    def get_basic_info_for_all( self):
-        for film_id in self.unknown_films:
+    def get_basic_info_for_all( self, VERBOSE=False):
+        for film_id in jupyter_aware_tqdm(self.unknown_films, VERBOSE=VERBOSE):
             self.get_infoset(
                 film_id,
                 self.Infoset.BASIC_INFO )

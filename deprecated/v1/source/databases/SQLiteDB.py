@@ -1,7 +1,6 @@
 import sqlite3
 import datetime as dt
 
-
 class SQLiteDB:
 
     ########################

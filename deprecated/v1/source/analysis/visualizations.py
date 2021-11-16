@@ -3,7 +3,7 @@ import numpy as np
 from collections import defaultdict
 from matplotlib  import pyplot as plt
 from collections import defaultdict
-from bmb.source.cross_classification import heatmap
+from bmb.deprecated.v1.source.cross_classification import heatmap
 import math
 import seaborn as sns
 

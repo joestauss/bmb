@@ -39,7 +39,7 @@ class Query( Enum_StrIsValue):
         SELECT DISTINCT a.film
             FROM Alias a
             LEFT JOIN FilmInfoset fi ON a.film = fi.film AND fi.infoset=?
-        WHERE fi.infoset IS NULL
+        WHERE fi.infoset IS NULL AND a.type=1
     """
 
     # Hard-coded infoset number
@@ -76,6 +76,16 @@ class Query( Enum_StrIsValue):
         AND year - ? BETWEEN -2 AND 2; """
 
     UNKNOWN_ALIASES = "SELECT title, year FROM Alias WHERE type IS NULL"
+
+    UNTAG_FILM = "DELETE FROM FilmTag WHERE film=? AND tag=?"
+
+    UNTAGGED_FILMS = """
+        SELECT Alias.film
+        FROM Alias
+            LEFT JOIN FilmTag ON FilmTag.film = Alias.film
+        WHERE FilmTag.film IS NULL
+        AND Alias.type=1
+    """
 
     UPDATE_CONFIRM_TIME_FOR_JWURL_AT_STREAMER = """
         UPDATE JustWatchState

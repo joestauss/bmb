@@ -5,6 +5,9 @@ gitignored*
 _backup*
 
 notebooks/Watchlist.ipynb
+notebooks/__*.ipynb
 source/webscraping/streaming*.py
 source/webscraping/imdb*.py
+source/QuickTUI.py
 resource/*.db
+resource/Tag Indicators.json
