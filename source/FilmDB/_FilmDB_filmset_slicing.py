@@ -65,11 +65,9 @@ class _FilmDB_filmset_slicing:
                 raise ValueError( f"Illegal 'tag' value: {tag}")
             return_set &= passed_tag
 
-        if streamable is not None:
+        if streamable:
             if streamable:
                 return_set &= set( self.get( Query.GET_STREAMABLE_FILMS))
-            else:
-                return_set &= set( self.get( Query.GET_NONSTREAMABLE_FILM))
 
 
         return_set = {item for item in return_set if item is not None}

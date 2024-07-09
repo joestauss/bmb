@@ -42,6 +42,12 @@ class _FilmDB_streaming_status:
         unknown_urls = self.get( "SELECT url from JustWatchURL WHERE film is Null")
         for url in jupyter_aware_tqdm( unknown_urls, VERBOSE=VERBOSE):
             soup        = safe_soup( url)
-            tb          = soup.find( class_='title-block')
-            title, year = tb.find( 'h1').text.strip(), int( tb.find( class_='text-muted').text.split( '(')[1].split(')')[0])
-            self.set( "UPDATE JustwatchURL SET film=? WHERE url=?", self.Film( title, year, lookup=True), url)
+            try:
+                tb          = soup.find( class_='title-block')
+                title, year = tb.find( 'h1').text.strip(), int( tb.find( class_='text-muted').text.split( '(')[1].split(')')[0])
+                film_id     = self.Film( title, year, lookup=True)
+                if film_id is None:
+                    film_id     = 'film id error'
+                self.set( "UPDATE JustwatchURL SET film=? WHERE url=?", film_id, url)
+            except:
+                raise  IdentificationError( url)

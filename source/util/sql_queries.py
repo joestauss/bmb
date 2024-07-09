@@ -26,6 +26,13 @@ class Query( Enum_StrIsValue):
         WHERE   FilmTag.film=?
     """
 
+    GET_STREAMABLE_FILMS = """
+        SELECT  u.film
+        FROM    JustWatchState s
+        JOIN    JustWatchURL u ON  s.url = u.id
+        WHERE   s.removed IS NULL
+    """
+
     PREPARE_TAGS_FOR_EXPORT = """
         SELECT a.title, a.year, t.text, t.added
         FROM FilmTag ft
